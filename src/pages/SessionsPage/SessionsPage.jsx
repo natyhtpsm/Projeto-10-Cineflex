@@ -9,7 +9,6 @@ export default function SessionsPage() {
     const [sessions, setSessions] = useState();
     const [title, setTitle] = useState();
     const parameters = useParams();
-    const idFilme = parameters.id?.replace(':', '');
 
     useEffect(() => {
         const url = `https://mock-api.driven.com.br/api/v8/cineflex/movies/${parameters.idFilme}/showtimes`;
