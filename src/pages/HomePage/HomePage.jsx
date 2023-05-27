@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from 'axios';
+import { Link } from "react-router-dom";
 
 export default function HomePage() {
 
@@ -13,7 +14,6 @@ export default function HomePage() {
         promise.then((objeto)=>{
             console.log(objeto.data);
             setPoster(objeto.data);
-
         });
         
         promise.catch((erro)=>{
@@ -22,21 +22,24 @@ export default function HomePage() {
 
     }, []);
 
-
+    if(poster.length === 0){
+        return(<div> Carregando... </div>);
+    }
 
     return (
         <PageContainer>
             Selecione o filme
-
             <ListContainer>
                 {poster.map(i => (
-                    <MovieContainer>
-                        <img src={i.posterURL}/>
-                    </MovieContainer>
+                    <Link to={`/sessoes/:${i.id}`} key={i.id}>
+                        <MovieContainer>
+                            <img src={i.posterURL}/>
+                        </MovieContainer>
+                    </Link>
                 ))}
             </ListContainer>
         </PageContainer>
-    )
+    );
 }
 
 const PageContainer = styled.div`
