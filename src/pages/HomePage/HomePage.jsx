@@ -12,7 +12,6 @@ export default function HomePage() {
         const promise = axios.get(URL);
 
         promise.then((objeto)=>{
-            console.log(objeto.data);
             setPoster(objeto.data);
         });
         

@@ -18,7 +18,6 @@ export default function SessionsPage() {
             setPoster(objeto.data.posterURL);
             setTitle(objeto.data.title);
             setSessions(objeto.data.days);
-            console.log('SESSOES:', objeto.data.days);
         });
         promise.catch(erro => console.log(erro.response.data));
 
