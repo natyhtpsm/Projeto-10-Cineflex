@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import SeatItem from "../../components/SeatItem";
+import InputMask from 'react-input-mask';
 
 export default function SeatsPage() {
 
@@ -13,8 +14,20 @@ export default function SeatsPage() {
     const [poster, setPoster] = useState();
     const [title, setTitle] = useState();
     const [selectedSeats, setSelectedSeats] = useState([]);
+    const [inputName, setInputName] = useState('');
+    const [inputCpf, setInputCpf] = useState('');
+    const [success, setSuccess] = useState({});
+
 
     const parameters = useParams();
+
+    const nameChange = (event) => {
+        setInputName(event.target.value);
+    };
+
+    const cpfChange = (event) => {
+        setInputCpf(event.target.value.replace(/\D/g, ''));
+    };
 
     useEffect(() => {
         const url = `https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${parameters.idSessao}/seats`;
@@ -27,27 +40,27 @@ export default function SeatsPage() {
             setHour(obj.data.name);
             setPoster(obj.data.movie.posterURL);
             setTitle(obj.data.movie.title);
-            console.log('INFORMACOES: ', obj);
-            console.log('ASSENTOS: ', seats);
-            console.log('SEMANA: ', weekday);
-            console.log('DIA: ', date);
-            console.log('HORA: ', hour);
-            console.log('POSTER: ', poster);
-            console.log('TITULO: ', title);
-    
         });
         promise.catch(erro => console.log(erro.response.data));
 
     }, []);
 
+    function sendData(){
+        const data = {
+            ids: selectedSeats, name: inputName, cpf: inputCpf
+        };
+        const promise = axios.post(`https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many`, data);
+        promise.then (setSuccess(data));
+        promise.catch(erro => console.log(erro.response.data));
+    }
+
     return (
         <PageContainer>
             Selecione o(s) assento(s)
-
             <SeatsContainer>
                 {seats?.map(seat => (
                     <StyledLink>
-                        <SeatItem isAvailable={seat.isAvailable} name={seat.name} selectedSeats={selectedSeats} setSelectedSeats={setSelectedSeats}></SeatItem>
+                        <SeatItem isAvailable={seat.isAvailable} name={seat.name} seatId={seat.id} selectedSeats={selectedSeats} setSelectedSeats={setSelectedSeats}></SeatItem>
                     </StyledLink>
                 ))}  
             </SeatsContainer>
@@ -68,12 +81,12 @@ export default function SeatsPage() {
 
             <FormContainer>
                 Nome do Comprador:
-                <input placeholder="Digite seu nome..." />
+                <input type='text' value={inputName} onChange={nameChange} placeholder="Digite seu nome..." />
 
                 CPF do Comprador:
-                <input placeholder="Digite seu CPF..." />
+                <InputMask mask="999.999.999-99" value={inputCpf} onChange={cpfChange} placeholder="Digite seu CPF..." />
 
-                <button>Reservar Assento(s)</button>
+                <button onClick={() => sendData()}>Reservar Assento(s)</button>
             </FormContainer>
 
             <FooterContainer>

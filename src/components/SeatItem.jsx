@@ -9,14 +9,14 @@ export default function SeatItem(props) {
     function Select() {
         if (!selected) {
           setSelected(true);
-          if (!props.selectedSeats.includes(props.name)) {
-            props.setSelectedSeats([...props.selectedSeats, props.name]);
+          if (!props.selectedSeats.includes(props.seatId)) {
+            props.setSelectedSeats([...props.selectedSeats, props.seatId]);
           }
         }
         if (selected) {
           setSelected(false);
-          if (props.selectedSeats.includes(props.name)) {
-            props.setSelectedSeats(props.selectedSeats.filter(i => i !== props.name));
+          if (props.selectedSeats.includes(props.seatId)) {
+            props.setSelectedSeats(props.selectedSeats.filter(i => i !== props.seatId));
           }
         }
       }      
