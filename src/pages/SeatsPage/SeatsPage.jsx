@@ -61,7 +61,7 @@ export default function SeatsPage() {
             <SeatsContainer>
                 {seats?.map(seat => (
                     <StyledLink>
-                        <SeatItem isAvailable={seat.isAvailable} name={seat.name} seatId={seat.id} selectedSeats={selectedSeats} setSelectedSeats={setSelectedSeats} selectedSeatsName = {selectedSeatsName} setSelectedSeatsName={setSelectedSeatsName}></SeatItem>
+                        <SeatItem data-test="seat" isAvailable={seat.isAvailable} name={seat.name} seatId={seat.id} selectedSeats={selectedSeats} setSelectedSeats={setSelectedSeats} selectedSeatsName = {selectedSeatsName} setSelectedSeatsName={setSelectedSeatsName}></SeatItem>
                     </StyledLink>
                 ))}
             </SeatsContainer>
@@ -82,16 +82,16 @@ export default function SeatsPage() {
 
             <FormContainer>
                 Nome do Comprador:
-                <input type='text' value={inputName} onChange={nameChange} placeholder="Digite seu nome..." />
+                <input data-test="client-name" type='text' value={inputName} onChange={nameChange} placeholder="Digite seu nome..." />
 
                 CPF do Comprador:
-                <InputMask mask="999.999.999-99" value={inputCpf} onChange={cpfChange} placeholder="Digite seu CPF..." />
+                <InputMask data-test="client-cpf" mask="999.999.999-99" value={inputCpf} onChange={cpfChange} placeholder="Digite seu CPF..." />
             
-                    <button onClick={() => sendData()}>Reservar Assento(s)</button>
+                    <button data-test="book-seat-btn" onClick={() => sendData()}>Reservar Assento(s)</button>
                 
             </FormContainer>
 
-            <FooterContainer>
+            <FooterContainer data-test="footer">
                 <div>
                     <img src={poster} alt="poster" />
                 </div>

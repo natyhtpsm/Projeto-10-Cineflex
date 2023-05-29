@@ -31,7 +31,7 @@ export default function HomePage() {
             <ListContainer>
                 {poster.map(i => (
                     <Link to={`/sessoes/${i.id}`} key={i.id}>
-                        <MovieContainer>
+                        <MovieContainer data-test="movie">
                             <img src={i.posterURL}/>
                         </MovieContainer>
                     </Link>
