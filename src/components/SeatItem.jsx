@@ -6,7 +6,10 @@ export default function SeatItem(props) {
     const [selected, setSelected] = useState(false);
     
     function Select() {
-        if (!selected) {
+        if(!available){
+          alert('Assento não disponivel');
+        }
+        if (!selected && available) {
           setSelected(true);
           if (!props.selectedSeats.includes(props.seatId)) {
             props.setSelectedSeats([...props.selectedSeats, props.seatId]);
@@ -15,7 +18,7 @@ export default function SeatItem(props) {
             props.setSelectedSeatsName([...props.selectedSeatsName, props.name]);
           }
         }
-        if (selected) {
+        if (selected && available) {
           setSelected(false);
           if (props.selectedSeats.includes(props.seatId)) {
             props.setSelectedSeats(props.selectedSeats.filter(i => i !== props.seatId));
@@ -24,10 +27,11 @@ export default function SeatItem(props) {
             props.setSelectedSeatsName(props.selectedSeatsName.filter(i => i !== props.name));
           }
         }
+        
       }      
 
     return (
-        <Seat data-test="seat" isAvailable={props.isAvailable} selected={selected} onClick={() => Select()} disabled={!available}>{props.name}</Seat>
+        <Seat data-test="seat" isAvailable={props.isAvailable} selected={selected} onClick={() => Select()}>{props.name}</Seat>
     );
 }
 
