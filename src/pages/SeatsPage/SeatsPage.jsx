@@ -61,7 +61,7 @@ export default function SeatsPage() {
             <SeatsContainer>
                 {seats?.map(seat => (
                     <StyledLink>
-                        <SeatItem data-test="seat" isAvailable={seat.isAvailable} name={seat.name} seatId={seat.id} selectedSeats={selectedSeats} setSelectedSeats={setSelectedSeats} selectedSeatsName = {selectedSeatsName} setSelectedSeatsName={setSelectedSeatsName}></SeatItem>
+                        <SeatItem isAvailable={seat.isAvailable} name={seat.name} seatId={seat.id} selectedSeats={selectedSeats} setSelectedSeats={setSelectedSeats} selectedSeatsName = {selectedSeatsName} setSelectedSeatsName={setSelectedSeatsName}></SeatItem>
                     </StyledLink>
                 ))}
             </SeatsContainer>

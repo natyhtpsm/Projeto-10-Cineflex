@@ -27,7 +27,7 @@ export default function SeatItem(props) {
       }      
 
     return (
-        <Seat isAvailable={props.isAvailable} selected={selected} onClick={() => Select()} disabled={!available}>{props.name}</Seat>
+        <Seat data-test="seat" isAvailable={props.isAvailable} selected={selected} onClick={() => Select()} disabled={!available}>{props.name}</Seat>
     );
 }
 
