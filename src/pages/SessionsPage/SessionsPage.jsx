@@ -84,6 +84,14 @@ const ButtonsContainer = styled.div`
     margin: 20px 0;
     button {
         margin-right: 20px;
+        width: 83px;
+        height: 43px;
+        left: 114px;
+        top: 227px;
+        color: white;
+        background: #E8833A;
+        border: none;
+        border-radius: 3px;
     }
     a {
         text-decoration: none;

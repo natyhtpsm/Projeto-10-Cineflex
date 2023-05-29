@@ -139,9 +139,26 @@ const FormContainer = styled.div`
     font-size: 18px;
     button {
         align-self: center;
+        width: 225px;
+        height: 42px;
+        left: 72px;
+        top: 688px;
+        margin-top: 53px;
+        color: white;
+        border: none;
+        background: #E8833A;
+        border-radius: 3px;
     }
     input {
         width: calc(100vw - 60px);
+        width: 327px;
+        height: 51px;
+        left: 24px;
+        top: 497px;
+
+        background: #FFFFFF;
+        border: 1px solid #D5D5D5;
+        border-radius: 3px;
     }
 `
 const CaptionContainer = styled.div`
