@@ -1,31 +1,38 @@
 import styled from "styled-components"
+import { useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
+
 
 export default function SuccessPage() {
-
+    const { seatsname, name, cpf, date, hour, title } = useLocation().state;
+    const formattedCPF = cpf.replace(
+        /^(\d{3})(\d{3})(\d{3})(\d{2})$/,
+        '$1.$2.$3-$4'
+      );
     return (
         <PageContainer>
             <h1>Pedido feito <br /> com sucesso!</h1>
 
             <TextContainer>
                 <strong><p>Filme e sessão</p></strong>
-                <p>Tudo em todo lugar ao mesmo tempo</p>
-                <p>03/03/2023 - 14:00</p>
+                <p>{title}</p>
+                <p>{date} - {hour}</p>
             </TextContainer>
 
             <TextContainer>
                 <strong><p>Ingressos</p></strong>
-                <p>Assento 01</p>
-                <p>Assento 02</p>
-                <p>Assento 03</p>
+                {seatsname.map( seat => (<p>Assento {seat}</p>))}
             </TextContainer>
 
             <TextContainer>
                 <strong><p>Comprador</p></strong>
-                <p>Nome: Letícia Chijo</p>
-                <p>CPF: 123.456.789-10</p>
+                <p>Nome: {name}</p>
+                <p>CPF: {formattedCPF}</p>
             </TextContainer>
-
-            <button>Voltar para Home</button>
+            <Link to={`/`}>
+                <button>Voltar para Home</button>
+            </Link>
+            
         </PageContainer>
     )
 }

@@ -2,8 +2,7 @@ import styled from "styled-components";
 import { useState } from "react";
 
 export default function SeatItem(props) {
-    let array = props.selectedSeats;
-    const available = props.isAvailable;
+  const available = props.isAvailable;
     const [selected, setSelected] = useState(false);
     
     function Select() {
@@ -12,11 +11,17 @@ export default function SeatItem(props) {
           if (!props.selectedSeats.includes(props.seatId)) {
             props.setSelectedSeats([...props.selectedSeats, props.seatId]);
           }
+          if (!props.selectedSeatsName.includes(props.name)) {
+            props.setSelectedSeatsName([...props.selectedSeatsName, props.name]);
+          }
         }
         if (selected) {
           setSelected(false);
           if (props.selectedSeats.includes(props.seatId)) {
             props.setSelectedSeats(props.selectedSeats.filter(i => i !== props.seatId));
+          }
+          if (props.selectedSeatsName.includes(props.name)) {
+            props.setSelectedSeatsName(props.selectedSeatsName.filter(i => i !== props.name));
           }
         }
       }      

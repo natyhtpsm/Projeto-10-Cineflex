@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
@@ -6,7 +6,7 @@ import SeatItem from "../../components/SeatItem";
 import InputMask from 'react-input-mask';
 
 export default function SeatsPage() {
-
+    const navigate = useNavigate();
     const [seats, setSeats] = useState();
     const [weekday, setWeekday] = useState();
     const [date, setDate] = useState();
@@ -14,11 +14,9 @@ export default function SeatsPage() {
     const [poster, setPoster] = useState();
     const [title, setTitle] = useState();
     const [selectedSeats, setSelectedSeats] = useState([]);
+    const [selectedSeatsName, setSelectedSeatsName] = useState([]);
     const [inputName, setInputName] = useState('');
     const [inputCpf, setInputCpf] = useState('');
-    const [success, setSuccess] = useState({});
-
-
     const parameters = useParams();
 
     const nameChange = (event) => {
@@ -45,12 +43,15 @@ export default function SeatsPage() {
 
     }, []);
 
-    function sendData(){
-        const data = {
-            ids: selectedSeats, name: inputName, cpf: inputCpf
-        };
+    function sendData() {
+        const ids = selectedSeats; 
+        const name = inputName;
+        const cpf =  inputCpf;
+        const seatsname = selectedSeatsName;
+        const data = { ids, name, cpf}
         const promise = axios.post(`https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many`, data);
-        promise.then (setSuccess(data));
+        promise.then(navigate("/sucesso", { state: { seatsname, name, cpf, weekday, date, hour, title }})
+        );
         promise.catch(erro => console.log(erro.response.data));
     }
 
@@ -60,21 +61,21 @@ export default function SeatsPage() {
             <SeatsContainer>
                 {seats?.map(seat => (
                     <StyledLink>
-                        <SeatItem isAvailable={seat.isAvailable} name={seat.name} seatId={seat.id} selectedSeats={selectedSeats} setSelectedSeats={setSelectedSeats}></SeatItem>
+                        <SeatItem isAvailable={seat.isAvailable} name={seat.name} seatId={seat.id} selectedSeats={selectedSeats} setSelectedSeats={setSelectedSeats} selectedSeatsName = {selectedSeatsName} setSelectedSeatsName={setSelectedSeatsName}></SeatItem>
                     </StyledLink>
-                ))}  
+                ))}
             </SeatsContainer>
             <CaptionContainer>
                 <CaptionItem>
-                    <CaptionCircle style={{backgroundColor: '#1AAE9E', border: '1px solid #0E7D71'}} />
+                    <CaptionCircle style={{ backgroundColor: '#1AAE9E', border: '1px solid #0E7D71' }} />
                     Selecionado
                 </CaptionItem>
                 <CaptionItem>
-                    <CaptionCircle style={{backgroundColor: '#C3CFD9', border: '1px solid #7B8B99'}}/>
+                    <CaptionCircle style={{ backgroundColor: '#C3CFD9', border: '1px solid #7B8B99' }} />
                     Disponível
                 </CaptionItem>
                 <CaptionItem>
-                    <CaptionCircle style={{backgroundColor: '#FBE192', border: '1px solid #F7C52B'}}/>
+                    <CaptionCircle style={{ backgroundColor: '#FBE192', border: '1px solid #F7C52B' }} />
                     Indisponível
                 </CaptionItem>
             </CaptionContainer>
@@ -85,8 +86,9 @@ export default function SeatsPage() {
 
                 CPF do Comprador:
                 <InputMask mask="999.999.999-99" value={inputCpf} onChange={cpfChange} placeholder="Digite seu CPF..." />
-
-                <button onClick={() => sendData()}>Reservar Assento(s)</button>
+            
+                    <button onClick={() => sendData()}>Reservar Assento(s)</button>
+                
             </FormContainer>
 
             <FooterContainer>
